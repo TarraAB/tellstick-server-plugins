@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from base import Plugin
+from base import Plugin, Application
 from telldus import DeviceManager, Device, Sensor
+from threading import Thread
 import logging
 
 class DummyPlugin(Device):
@@ -59,3 +60,16 @@ class DevPlugin(Plugin):
 		# When all devices has been loaded we need to call finishedLoading() to tell
 		# the manager we are finished. This clears old devices and caches
 		self.deviceManager.finishedLoading('dummyplugin')
+		Application().registerScheduledTask(fn=self.threadTest, seconds=40, runAtOnce=True)
+
+	def sensorTest(self):
+		try:
+			#Tested with log statement it works fine
+			logging.warning("Schedule device test")
+		except Exception as e:
+			logging.warning("Could not fetch device data")
+
+	def threadTest(self):
+		t = Thread(name='Device data', target=self.sensorTest)
+		t.daemon = True
+		t.start()

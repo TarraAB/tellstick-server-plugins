@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from base import Plugin
+from base import Plugin, Application
 from telldus import DeviceManager, Device, Sensor
+from threading import Thread
 import logging
 
 class DummyPlugin(Sensor):
@@ -15,7 +16,7 @@ class DummyPlugin(Sensor):
 	'''
 	def __init__(self):
 		super(DummyPlugin,self).__init__()
-		Sensor.setSensorValue(self, Device.TEMPERATURE, 15, 0.5)
+		# Sensor.setSensorValue(self, Device.TEMPERATURE, 15, 0.5)
 
 	def _command(self, action, value, success, failure, **kwargs):
 		'''This method is called when someone want to control this device
@@ -39,11 +40,7 @@ class DummyPlugin(Sensor):
 	def typeString(self):
 		'''Return the device type. Only one plugin at a time may export devices using
 		the same typestring'''
-		return 'dummysensor'
-
-	def methods(self):
-		'''Return a bitset of methods this device supports'''
-		return Sensor.TEMPERATURE
+		return 'testsensor'
 
 class DevPlugin(Plugin):
 	'''This is the plugins main entry point and is a singleton
@@ -59,4 +56,21 @@ class DevPlugin(Plugin):
 
 		# When all devices has been loaded we need to call finishedLoading() to tell
 		# the manager we are finished. This clears old devices and caches
-		self.deviceManager.finishedLoading('dummysensor')
+		self.deviceManager.finishedLoading('testsensor')
+		Application().registerScheduledTask(fn=self.threadTest, seconds=40, runAtOnce=True)
+
+	def sensorTest(self):
+		try:
+			logging.warning("Schedule sensor test")
+			#If the sensor data returned this method will call automatically
+			Sensor.setSensorValue(self, Device.TEMPERATURE, 15, 0.8)
+		except Exception as e:
+			logging.warning("Could not fetch Sensor data")
+
+	def threadTest(self):
+		t = Thread(name='Sensor data', target=self.sensorTest)
+		t.daemon = True
+		t.start()
+
+
+
