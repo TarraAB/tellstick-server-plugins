@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from threading import Thread
 
 from base import Plugin, Application
 from telldus import DeviceManager, Sensor
@@ -38,7 +37,7 @@ class DevPlugin(Plugin):
 		# When all devices has been loaded we need to call finishedLoading() to tell
 		# the manager we are finished. This clears old devices and caches
 		self.deviceManager.finishedLoading('testsensor')
-		Application().registerScheduledTask(fn=self.threadTest, seconds=40, runAtOnce=True)
+		Application().registerScheduledTask(fn=self.sensorTest, seconds=40, runAtOnce=True)
 
 	def sensorTest(self):
 		try:
@@ -47,8 +46,3 @@ class DevPlugin(Plugin):
 			self.sensor.setSensorValue(Sensor.TEMPERATURE, 15, Sensor.SCALE_TEMPERATURE_CELCIUS)
 		except Exception as _error:
 			logging.warning("Could not fetch Sensor data")
-
-	def threadTest(self):
-		thread = Thread(name='Sensor data', target=self.sensorTest)
-		thread.daemon = True
-		thread.start()
