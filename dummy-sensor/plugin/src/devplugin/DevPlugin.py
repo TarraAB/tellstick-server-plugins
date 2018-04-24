@@ -60,7 +60,7 @@ class DevPlugin(Plugin):
 		try:
 			logging.warning("Schedule sensor test")
 			#If the sensor data returned this method will call automatically
-			self.sensor.setSensorValue(Device.TEMPERATURE, 15, 0.8)
+			self.sensor.setSensorValue(Sensor.TEMPERATURE, 15, Sensor.SCALE_TEMPERATURE_CELCIUS)
 		except Exception as e:
 			logging.warning("Could not fetch Sensor data")
 
