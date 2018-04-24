@@ -48,7 +48,8 @@ class DevPlugin(Plugin):
 
 		# Load all devices this plugin handles here. Individual settings for the devices
 		# are handled by the devicemanager
-		self.deviceManager.addDevice(DummySensor())
+		self.sensor = DummySensor()
+		self.deviceManager.addDevice(self.sensor)
 
 		# When all devices has been loaded we need to call finishedLoading() to tell
 		# the manager we are finished. This clears old devices and caches
@@ -59,7 +60,7 @@ class DevPlugin(Plugin):
 		try:
 			logging.warning("Schedule sensor test")
 			#If the sensor data returned this method will call automatically
-			Sensor.setSensorValue(self, Device.TEMPERATURE, 15, 0.8)
+			self.sensor.setSensorValue(Device.TEMPERATURE, 15, 0.8)
 		except Exception as e:
 			logging.warning("Could not fetch Sensor data")
 
