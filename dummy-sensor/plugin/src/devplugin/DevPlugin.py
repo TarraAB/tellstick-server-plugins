@@ -5,7 +5,7 @@ from telldus import DeviceManager, Device, Sensor
 from threading import Thread
 import logging
 
-class DummyPlugin(Sensor):
+class DummySensor(Sensor):
 	'''All devices exported must subclass Device
 
 	Minimal function to reimplement is:
@@ -14,10 +14,6 @@ class DummyPlugin(Sensor):
 	typeString
 	methods
 	'''
-	def __init__(self):
-		super(DummyPlugin,self).__init__()
-		# Sensor.setSensorValue(self, Device.TEMPERATURE, 15, 0.5)
-
 	def _command(self, action, value, success, failure, **kwargs):
 		'''This method is called when someone want to control this device
 
@@ -52,7 +48,7 @@ class DevPlugin(Plugin):
 
 		# Load all devices this plugin handles here. Individual settings for the devices
 		# are handled by the devicemanager
-		self.deviceManager.addDevice(DummyPlugin())
+		self.deviceManager.addDevice(DummySensor())
 
 		# When all devices has been loaded we need to call finishedLoading() to tell
 		# the manager we are finished. This clears old devices and caches
