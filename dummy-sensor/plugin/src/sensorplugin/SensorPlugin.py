@@ -21,7 +21,7 @@ class DummySensor(Sensor):
 		the same typestring'''
 		return 'testsensor'
 
-class DevPlugin(Plugin):
+class SensorPlugin(Plugin):
 	'''This is the plugins main entry point and is a singleton
 	Manage and load the plugins here
 	'''
@@ -41,7 +41,7 @@ class DevPlugin(Plugin):
 
 	def sensorTest(self):
 		try:
-			logging.warning("Schedule sensor test")
+			logging.warning("Update sensor value.")
 			#If the sensor data returned this method will call automatically
 			self.sensor.setSensorValue(Sensor.TEMPERATURE, 15, Sensor.SCALE_TEMPERATURE_CELCIUS)
 		except Exception as _error:
