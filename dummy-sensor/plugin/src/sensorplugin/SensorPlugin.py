@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import random
 
 from base import Plugin, Application
 from telldus import DeviceManager, Sensor
@@ -42,7 +43,8 @@ class SensorPlugin(Plugin):
 	def sensorTest(self):
 		try:
 			logging.warning("Update sensor value.")
+			value = round(random.uniform(1.0, 100.0),2)
 			#If the sensor data returned this method will call automatically
-			self.sensor.setSensorValue(Sensor.TEMPERATURE, 15, Sensor.SCALE_TEMPERATURE_CELCIUS)
+			self.sensor.setSensorValue(Sensor.TEMPERATURE, value, Sensor.SCALE_TEMPERATURE_CELCIUS)
 		except Exception as _error:
 			logging.warning("Could not fetch Sensor data")
