@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from base import configuration, ConfigurationString, Plugin, ConfigurationList
+from base import configuration, ConfigurationString, Plugin, ConfigurationList, ConfigurationManager
 
 __name__ = 'configuration'
 
@@ -30,10 +30,19 @@ __name__ = 'configuration'
 	)
 )
 class Config(Plugin):
-	def companyInfo(self):
+
+	def getCompanyInfo(self):
 		return {
 			'companyName' : self.config('companyName'),
 			'contacts' : self.config('contacts'),
 			'username' : self.config('username'),
 			'password' : self.config('password'),
 		}
+
+	def setCompanyInfo(self, companyName, contacts, username, password):
+
+		self.setValue('companyName', companyName)
+		self.setValue('contacts', contacts)
+		self.setValue('username', username)
+		self.setValue('password', password)
+

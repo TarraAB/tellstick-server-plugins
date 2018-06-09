@@ -9,8 +9,8 @@ except ImportError:
 setup(
 	name='Configuration',
 	version='1.0',
-	author='Telldus Technologies',
-	author_email='info.tech@telldus.se',
+	author='anilsingh',
+	author_email='ajajul9998555036@gmail.com',
 	color='#000000',
 	description='Company Information',
 	packages=['configuration'],
