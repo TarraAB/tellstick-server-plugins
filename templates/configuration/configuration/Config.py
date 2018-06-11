@@ -6,27 +6,24 @@ __name__ = 'configuration'
 
 @configuration(
 	companyName = ConfigurationString(
-		defaultValue='Telldus Technologies',
+		defaultValue='',
 		title='Company Name',
 		description='Name of the Company'
 	),
 	contacts = ConfigurationList(
-		defaultValue=['9879879879', '8529513579', '2619859867'],
+		defaultValue=[],
 		title='company contacts',
-		description='Contacts of the company',
-		minLength=2
+		description='Contacts of the company'
 	),
 	username = ConfigurationString(
-		defaultValue='admin@gmail.com',
+		defaultValue='',
 		title='Username',
 		description='Username of the company Administrator'
 	),
 	password = ConfigurationString(
-		defaultValue='admin1234',
+		defaultValue='',
 		title='Password',
-		description='Password of the company Administrator',
-		minLength=8,
-		maxLength=12
+		description='Password of the company Administrator'
 	)
 )
 class Config(Plugin):
@@ -38,11 +35,3 @@ class Config(Plugin):
 			'username' : self.config('username'),
 			'password' : self.config('password'),
 		}
-
-	def setCompanyInfo(self, companyName, contacts, username, password):
-
-		self.setValue('companyName', companyName)
-		self.setValue('contacts', contacts)
-		self.setValue('username', username)
-		self.setValue('password', password)
-
